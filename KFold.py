@@ -1,18 +1,16 @@
 import pandas as pd
+from read import read
 from tables import table
 from tableunion import tableunion
 from fisher import fisher
-from train import train
 from ybp import ybp
-from rop import rop
-from read import read
-from testp import testp
 from sklearn.model_selection import KFold, train_test_split
 
 def kfold(filename,k):
     df = read(filename).readcsv()
     itemset = read(filename).readitem()
     typenum = read(filename).readtypenum()
+
     X = df['d']
     y = df['t']
     kf = KFold(n_splits=k, shuffle=True, random_state=42)
@@ -38,39 +36,32 @@ def kfold(filename,k):
             'd': list(X_test),
             't': list(y_test)
         }
+
         df_train = pd.DataFrame(df_train)
         df_test = pd.DataFrame(df_test)
         df_yz = pd.DataFrame(df_yz)
+
+
+
+        file = open('dataset/{}_lscolumns.txt'.format(i),'w')
+        file.write(','.join(itemset))
+        file.close()
+
+
+
         tab = table(df_train, itemset)
+        print(tab)
         tabunion = tableunion(tab,typenum)
+        # print(tabunion)
         p = fisher(tabunion)
-        # train(p[1],i)
+        # print(p[1])
         tabyz = table(df_yz, itemset)
+        print(tabyz)
         tabtest = table(df_test,itemset)
-        lscolumnsybp = ybp(tabyz,itemset,p[1],typenum)
+
+        lscolumnsybp = ybp(tabyz, itemset, p[1], typenum)
         # print(lscolumnsybp)
 
-        ac = rop(tabyz,lscolumnsybp)
-        #每次检验验证机在不同特征值的额准确率
-        maxval = max(ac)
-        maxindex = ac.index(maxval)
-        # print(ac,maxindex)
 
-        lscolumnstestp = testp(tabtest,itemset,p[1],typenum)[maxindex]
-        # print(lscolumnstestp)
 
-        k = 0
-        ltestaccurac = []
-        for i in  range(0,len(lscolumnstestp)):
-            if str(lscolumnstestp[i]) == str(tabtest['t'].values[i]):
-                k = k+1
-        testac = k/len(lscolumnstestp)
-
-        lstestac.append(testac)
-    # print(lstestac)
-
-    ans = 0
-    for i in lstestac:
-        ans = ans+i
-
-    return ans/len(lstestac)
+    return 0

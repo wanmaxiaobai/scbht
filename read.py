@@ -1,7 +1,4 @@
 import pandas as pd
-import numpy as np
-import re
-import random
 class read:
     def __init__(self, filename):
         self.name = filename

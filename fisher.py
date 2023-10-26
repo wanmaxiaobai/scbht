@@ -9,6 +9,7 @@ def fisher(tableunion):
     lstableunion = []
     lslsp = []
     for j in index:
+        lscolumns = []
         lsp = []
         tableunionj = tableunion[index == j]
         ntableunionj = tableunion.drop(index=j)
@@ -52,11 +53,15 @@ def fisher(tableunion):
             tabletwo = result[[columns[i + 1], columns[i]]]
             p1 = fisher_exact(table, alternative='greater')
             p2 = fisher_exact(tabletwo, alternative='greater')
-            lsp.append([columns[i][0:len(columns[i])-1], p1[1], p2[1], i])
-
+            lsp.append(p1[1])
+            lsp.append(p2[1])
+            lscolumns.append(columns[i])
+            lscolumns.append(columns[i+1])
+            # lsp.append([columns[i][0:len(columns[i])-1], p1[1], p2[1], i])
+        sorted_pairs = sorted(zip(lsp, lscolumns))
+        sorted_list1, sorted_list2 = zip(*sorted_pairs)
         # lsp.sort(key=key_function)
-        lslsp.append(j)
-        lslsp.append(lsp)
+        lslsp.append([sorted_list2, sorted_list1])
     # print(lslsp)
     '''
     p值列表

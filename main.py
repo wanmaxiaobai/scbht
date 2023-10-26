@@ -1,10 +1,9 @@
 from datainpute import datainput
 from KFold import kfold
 
-
 if __name__ == '__main__':
 
-    dataset = ['epitope','activity', 'aslbu', 'gene', 'pioneer', 'context', 'robot', 'auslan2', 'skating', 'unix', 'question',  'temprestboost']
+    dataset = ['activity', 'aslbu','auslan2','context','epitope','gene','news','pioneer','question','reuters', 'robot', 'skating', 'temprestboost','unix','webkb' ]
     for i in dataset:
         dataframe, itemset = datainput('dataset/{}.txt'.format(i))
         dataframe.to_csv('dataset/{}_dataframe.csv'.format(i))
@@ -18,10 +17,11 @@ if __name__ == '__main__':
         file.write(','.join(itemset))
         file.close()
 
-    datasettest = ['epitope','activity', 'aslbu', 'gene', 'pioneer', 'context']
+    datasettest = ['activity', 'aslbu','auslan2','context','epitope','gene','pioneer', 'question', 'reuters', 'robot', 'skating', 'temprestboost', 'unix', 'webkb']
+    datasettest = ['activity']
     lsaccurac = []
     for i in datasettest:
-        accurac = kfold(i,3)
+        accurac = kfold(i,5)
         lsaccurac.append(accurac)
         print(i,accurac)
 

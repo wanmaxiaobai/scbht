@@ -26,10 +26,10 @@ def tableunion(tables,typenum):
     tableunion = pd.DataFrame(int(0), index=newindex, columns=newcolumns)
     tableunion['id'] = [str(i) for i in range(len(tableunion.index))]
 
-    for j in range(0, len(columns)):
+    for j in range(0, len(columns)-1):
         for i in range(0, len(index)):
             t = str(tables.loc[index[i], 't'])
-            if tables.loc[index[i], columns[j]] > 0:
+            if tables.loc[index[i], columns[j]] >= 1:
                 tableunion.loc[tableunion.index==t, newcolumns[j * 2]] = tableunion.loc[tableunion.index==t, newcolumns[j * 2]] + 1
             else:
                 tableunion.loc[tableunion.index==t, newcolumns[j * 2 + 1]] = tableunion.loc[tableunion.index==t, newcolumns[j * 2 + 1]] + 1

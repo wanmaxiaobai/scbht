@@ -9,34 +9,38 @@ def ybp(table, itemset, lslsp,typenum):
     index = table.index
     columns = itemset
     typenum = typenum
-    for n in range(0, len(typenum)):
-        tables = np.array(table)
-        for j in range(0, len(columns)):
-            for i in range(0, len(index)):
-                if tables[i][j] > 0:
-                    tables[i][j]= lslsp[2*n+1][j][1]
-                else:
-                    tables[i][j] = lslsp[2*n+1][j][2]
-        t = tables
-        # print(t)
-        lsybp.append(t)
-    # print(lsybp)
+    print(table)
+    print(itemset)
+    print(typenum)
 
 
-    mintype = ''
-    lscolumnsybp = []
-    for j in range(0,len(columns)):
-        lstypenump = []
-        for i in range(0,len(index)):
-            min = 1
-            for n in range(0, len(typenum)):
-                if lsybp[n][i][j] <= min:
-                    min = lsybp[n][i][j]
-                    mintype = typenum[n]
-            lstypenump.append((mintype))
-        lscolumnsybp.append(lstypenump)
-        # print(lstypenump)
-    # print(lscolumnsybp)
+    for i in lslsp:
+        print(i[0])
 
-    return lscolumnsybp
+    for rp in range(0, 2*len(itemset)):
+        rps = []
+        rpsp = []
+        for i in lslsp:
+            rps.append(i[0][rp])
+            rpsp.append(i[1][rp])
+        print(rps,rpsp)
+
+        for i in index:
+            print(table.loc[i])
+            print(table.loc[i]['1'])
+        #     for j in rps:
+        #         print(j[:-1])
+        #         print(j[-1])
+
+
+
+
+
+
+
+
+
+
+
+    return 0
 
