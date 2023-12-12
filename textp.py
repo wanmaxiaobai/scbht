@@ -4,18 +4,17 @@ import scipy.stats as stats
 '''
 根据fisher返回的p值列表，在验证集上生成对应的p值表
 '''
-def ybp(table, itemset, lslsp,typenum):
+def testp(table, itemset, lslsp,typenum,maxr):
     lsybp = []
     table = table
     index = table.index
     columns = itemset
     typenum = typenum
-    # print(itemset)
-    # print(typenum)
+
     tablet = table.loc[:, 't'].values.tolist()
 
     strtablet= [str(num) for num in tablet]
-    # print(strtablet)
+
 
 
     lsyballrt = []
@@ -62,20 +61,13 @@ def ybp(table, itemset, lslsp,typenum):
     每个r样本类型的预测值
     [[0, 0, 0, 1, 0, 0], [0, 1, 0, 1, 0, 0], [1, 1, 1, 1, 1, 0], [1, 0, 0, 1, 1, 1], [1, 1, 1, 1, 1, 0], [0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]
     '''
-    maxacr = -1
-    maxr = 0
-    for i in range(0,len(lsyballrt)):
-        num = 0
-        for j in range(0,len(strtablet)):
-            if lsyballrt[i][j]==strtablet[j]:
-                num = num+1
-        acr = num/len(strtablet)
+    num = 0
+    for i in range(0,len(strtablet)):
+        if strtablet[i] == lsyballrt[maxr][i]:
+            num = num+1
+    testacr = num/len(strtablet)
 
-        if maxacr<acr:
-            maxacr = acr
-            maxr = i
+    print(maxr,testacr)
 
-    # print(maxacr,maxr)
-
-    return maxr
+    return testacr
 
