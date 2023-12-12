@@ -4,7 +4,11 @@ from tables import table
 from tableunion import tableunion
 from fisher import fisher
 from ybp import ybp
+from textp import testp
 from sklearn.model_selection import KFold, train_test_split
+
+from prefix import pfspan
+from randomsubsequence import randomsubsequence,generate_random_strings
 
 def kfold(filename,k):
     df = read(filename).readcsv()
@@ -41,6 +45,22 @@ def kfold(filename,k):
         df_test = pd.DataFrame(df_test)
         df_yz = pd.DataFrame(df_yz)
 
+        '''
+        频繁子序列
+        '''
+        itemset = pfspan(df_train)
+        print(len(itemset),itemset)
+        '''
+        随机截取子序列
+        '''
+        # itemset = randomsubsequence(df_train,3)
+        # print(len(itemset),itemset)
+        '''
+        随机生成子序列
+        '''
+
+        # itemset = generate_random_strings(itemset,10,3)
+
 
 
         file = open('dataset/{}_lscolumns.txt'.format(i),'w')
@@ -50,18 +70,23 @@ def kfold(filename,k):
 
 
         tab = table(df_train, itemset)
-        print(tab)
+        # print(tab)
         tabunion = tableunion(tab,typenum)
         # print(tabunion)
         p = fisher(tabunion)
         # print(p[1])
         tabyz = table(df_yz, itemset)
-        print(tabyz)
+        # print(tabyz)
         tabtest = table(df_test,itemset)
 
-        lscolumnsybp = ybp(tabyz, itemset, p[1], typenum)
-        # print(lscolumnsybp)
+        maxr = ybp(tabyz, itemset, p[1], typenum)
 
 
+        testacr = testp(tabtest, itemset, p[1], typenum,maxr)
+        lstestac.append(testacr)
 
-    return 0
+    ans = 0
+    for i in lstestac:
+        ans = ans+i
+
+    return ans/len(lstestac)

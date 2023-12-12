@@ -1,5 +1,6 @@
 from datainpute import datainput
 from KFold import kfold
+from read import read
 
 if __name__ == '__main__':
 
@@ -17,11 +18,15 @@ if __name__ == '__main__':
         file.write(','.join(itemset))
         file.close()
 
+
+    # df = read('gene').readcsv()
+    # print(type(df.loc[:, 't'].values.tolist()[0]))
+
     datasettest = ['activity', 'aslbu','auslan2','context','epitope','gene','pioneer', 'question', 'reuters', 'robot', 'skating', 'temprestboost', 'unix', 'webkb']
-    datasettest = ['activity']
+    datasettest = ['gene']
     lsaccurac = []
     for i in datasettest:
-        accurac = kfold(i,5)
+        accurac = kfold(i,10)
         lsaccurac.append(accurac)
         print(i,accurac)
 
