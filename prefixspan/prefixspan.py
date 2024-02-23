@@ -7,7 +7,7 @@ class PrefixSpan(object):
     def __init__(self, db: List[List[int]]):
         self._db = db
 
-        self.minlen, self.maxlen = 1, 2
+        self.minlen, self.maxlen = 1, 1
         '''
         频繁子序列的长度
         '''

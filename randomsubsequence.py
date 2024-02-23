@@ -1,4 +1,8 @@
 import random
+import math
+from tables import table
+from tableunion import tableunion
+from fisher import fisher
 def randomsubsequence(datatrain,zxln):
     n = zxln
     data = datatrain
@@ -17,14 +21,43 @@ def randomsubsequence(datatrain,zxln):
     return list(set(ls))
 
 
-def generate_random_strings(char_list, num_runs, length):
-    # 生成随机字符串的函数
-    def random_string():
-        # 打乱字符列表的顺序
-        random.shuffle(char_list)
-        # 从打乱顺序后的字符列表中选择指定长度的元素，并将其连接成字符串
-        return ' '.join(char_list[:length])
+def generate_random_strings(df_train, df_yz, typenum):
+    data = df_train
+    data = data['d'].values.tolist()
+    datalen = len(data)
+    k = round(math.sqrt(len(data)))*4
 
-    # 调用生成随机字符串的函数，运行num_runs次，并将结果存储在列表中
-    result_list = [random_string() for _ in range(num_runs)]
-    return result_list
+    random_elements = random.sample(data, k)
+    ls = []
+    for i in random_elements:
+        sl = i.split()
+        lenstr = round(math.sqrt(len(sl)))
+        substring_length = random.randint(1, lenstr)
+        # 随机选择截取的起始位置
+        start_index = random.randint(0, len(sl) - substring_length+1)
+        result = sl[start_index: start_index + substring_length]
+        s = ' '.join(result)
+        # print(s)
+        ls.append(s)
+
+    itemset = list(set(ls))
+    tabyz = table(df_yz, itemset)
+    tableunionyz = tableunion(tabyz, typenum)
+    p = fisher(tableunionyz)
+
+    lss = []
+    for i,j in p[1]:
+        for k in range(0, round(math.sqrt(len(i)))):
+            lss.append(i[k][:-1])
+
+    # print('提取出', list(set(lss)))
+    return list(set(lss))
+
+
+def n_generate_random_strings(df_train, df_yz, typenum, n):
+    lsitemset = []
+    for i in range(0, n):
+        itemset = generate_random_strings(df_train, df_yz, typenum)
+        lsitemset.extend(itemset)
+
+    return list(set(lsitemset))

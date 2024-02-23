@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import scipy.stats as stats
 '''
-根据fisher返回的p值列表，在验证集上生成对应的p值表
+根据ybp得到的maxr计算在测试集的准确率
 '''
 def testp(table, itemset, lslsp,typenum,maxr):
     lsybp = []
@@ -52,7 +52,7 @@ def testp(table, itemset, lslsp,typenum,maxr):
                     mincolumns = columns + flag
                 # print(table.loc[i][columns])
             listybrt.append(typenum[mint])
-        #     print('最小值',mint,minp,mincolumns)
+            # print('最小值',mint,minp,mincolumns)
         # print(listybrt)
         lsyballrt.append(listybrt)
     # print(lsyballrt)

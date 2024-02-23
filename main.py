@@ -23,7 +23,7 @@ if __name__ == '__main__':
     # print(type(df.loc[:, 't'].values.tolist()[0]))
 
     datasettest = ['activity', 'aslbu','auslan2','context','epitope','gene','pioneer', 'question', 'reuters', 'robot', 'skating', 'temprestboost', 'unix', 'webkb']
-    datasettest = ['gene']
+    datasettest = ['activity', 'aslbu','auslan2','context','epitope','gene','pioneer', 'question', 'reuters', 'robot', 'skating', 'temprestboost', 'unix', 'webkb']
     lsaccurac = []
     for i in datasettest:
         accurac = kfold(i,10)

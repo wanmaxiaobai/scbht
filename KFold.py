@@ -8,7 +8,7 @@ from textp import testp
 from sklearn.model_selection import KFold, train_test_split
 
 from prefix import pfspan
-from randomsubsequence import randomsubsequence,generate_random_strings
+from randomsubsequence import randomsubsequence,generate_random_strings,n_generate_random_strings
 
 def kfold(filename,k):
     df = read(filename).readcsv()
@@ -48,18 +48,19 @@ def kfold(filename,k):
         '''
         频繁子序列
         '''
-        itemset = pfspan(df_train)
-        print(len(itemset),itemset)
+        # itemset = pfspan(df_train)
+        # print('频繁子序列长度',len(itemset), itemset)
         '''
-        随机截取子序列
+        每条数据随机截取定长子序列
         '''
-        # itemset = randomsubsequence(df_train,3)
+        # itemset = randomsubsequence(df_train,2)
         # print(len(itemset),itemset)
         '''
         随机生成子序列
         '''
-
-        # itemset = generate_random_strings(itemset,10,3)
+        number_of_zxl = 64
+        itemset = n_generate_random_strings(df_train, df_yz, typenum, number_of_zxl)
+        # print('kfold',len(itemset),itemset)
 
 
 
