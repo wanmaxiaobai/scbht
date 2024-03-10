@@ -4,7 +4,7 @@ import scipy.stats as stats
 '''
 根据fisher返回的p值列表，在验证集上生成对应的p值表
 '''
-def ybp(table, itemset, lslsp,typenum):
+def ybp(table, itemset, lslsp, typenum):
     lsybp = []
     table = table
     index = table.index
@@ -75,7 +75,7 @@ def ybp(table, itemset, lslsp,typenum):
             maxacr = acr
             maxr = i
 
-    # print(maxacr,maxr)
+    print(maxacr,maxr)
 
-    return maxr
+    return maxacr,maxr
 

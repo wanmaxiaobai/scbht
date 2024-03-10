@@ -1,6 +1,5 @@
 from datainpute import datainput
 from KFold import kfold
-from read import read
 
 if __name__ == '__main__':
 
@@ -23,10 +22,10 @@ if __name__ == '__main__':
     # print(type(df.loc[:, 't'].values.tolist()[0]))
 
     datasettest = ['activity', 'aslbu','auslan2','context','epitope','gene','pioneer', 'question', 'reuters', 'robot', 'skating', 'temprestboost', 'unix', 'webkb']
-    datasettest = ['activity', 'aslbu','auslan2','context','epitope','gene','pioneer', 'question', 'reuters', 'robot', 'skating', 'temprestboost', 'unix', 'webkb']
+    datasettest = ['aslbu']
     lsaccurac = []
     for i in datasettest:
-        accurac = kfold(i,10)
+        accurac = kfold(i,9)
         lsaccurac.append(accurac)
         print(i,accurac)
 

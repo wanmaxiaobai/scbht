@@ -31,7 +31,7 @@ def generate_random_strings(df_train, df_yz, typenum):
     ls = []
     for i in random_elements:
         sl = i.split()
-        lenstr = round(math.sqrt(len(sl)))
+        lenstr = round(math.pow(len(sl), 1/3))
         substring_length = random.randint(1, lenstr)
         # 随机选择截取的起始位置
         start_index = random.randint(0, len(sl) - substring_length+1)
@@ -47,10 +47,10 @@ def generate_random_strings(df_train, df_yz, typenum):
 
     lss = []
     for i,j in p[1]:
-        for k in range(0, round(math.sqrt(len(i)))):
+        for k in range(0, round(math.pow(len(i), 1/3))):
             lss.append(i[k][:-1])
 
-    # print('提取出', list(set(lss)))
+    # print('randomsubsequence---generate_random_strings---提取出', list(set(lss)))
     return list(set(lss))
 
 
@@ -58,6 +58,6 @@ def n_generate_random_strings(df_train, df_yz, typenum, n):
     lsitemset = []
     for i in range(0, n):
         itemset = generate_random_strings(df_train, df_yz, typenum)
-        lsitemset.extend(itemset)
-
-    return list(set(lsitemset))
+        lsitemset.append(itemset)
+    # print('randomsubsequence---n_generate_random_strings---提取出',lsitemset)
+    return lsitemset

@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+from itertools import combinations
+import warnings
 '''
 ['1', '2', '3', '4', '5']
 是否包特征值表
@@ -29,13 +31,47 @@ def table(data,itemset):
     tables.columns = columns
     tables.index = index
 
-    # 原滑动窗口计算字串的数量
+    # 原滑动窗口计算字串的数量 i 每条数据
     for i in range(0, len(index)):
+        # j 每条特征
         for j in range(0, len(columns)):
-            for k in range(0, len(index[i]) - len(columns[j])):
-                if columns[j] == index[i][k:k + len(columns[j])]:
-                    tables.loc[index[i], columns[j]] = tables.loc[index[i], columns[j]] + 1
+            # if "anD" in columns[j]:
+            flag = 0
+            substrings = columns[j].split(" anD ")
+            for substring in substrings:
+                if substring not in index[i]:
+                    break
+                if substring == substrings[-1]:
+                    flag = 1
+            if flag == 1:
+                tables.loc[index[i], columns[j]] = tables.loc[index[i], columns[j]] + 1
+
+            # for k in range(0, len(index[i]) - len(columns[j])):
+            #     if columns[j] == index[i][k:k + len(columns[j])]:
+            #         tables.loc[index[i], columns[j]] = tables.loc[index[i], columns[j]] + 1
+
     tables['t'] = data.loc[:, 't'].values.tolist()
     # print("是否包特征值表")
     # print(tables)
     return tables
+
+
+def extendtable(table, n):
+    # 禁止显示特定类型的警告
+    warnings.filterwarnings('ignore', message='DataFrame is highly fragmented', category=UserWarning)
+    tablettype = table.iloc[:, -1]
+    oldtable = table.drop(table.columns[-1], axis=1)
+    columns = oldtable.columns.tolist()
+
+
+
+    # 添加列的组合，限制最多 n 个元素组成
+    for r in range(2, min(n + 1, len(columns) + 1)):
+        for combo in combinations(columns, r):
+            # 禁止显示特定类型的警告
+            warnings.filterwarnings('ignore', message='DataFrame is highly fragmented', category=UserWarning)
+            new_col_name = 'anD'.join(combo)
+            oldtable[new_col_name] = oldtable[list(combo)].sum(axis=1)
+
+    exttable = pd.concat([oldtable, tablettype], axis=1)
+    return exttable

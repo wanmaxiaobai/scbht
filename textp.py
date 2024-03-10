@@ -16,7 +16,7 @@ def testp(table, itemset, lslsp,typenum,maxr):
     strtablet= [str(num) for num in tablet]
 
 
-
+    rpslist = []
     lsyballrt = []
     for rp in range(0, 2*len(itemset)):
         rps = []
@@ -31,7 +31,8 @@ def testp(table, itemset, lslsp,typenum,maxr):
             rps.append(i[0][rp])
             rpsp.append(cdf_value)
             rs.append(i[1][rp])
-        # print(rps,rpsp,rs)
+        # print(rps)
+        rpslist.append(rps)
 
         listybrt = []
         for i in index:
@@ -67,7 +68,7 @@ def testp(table, itemset, lslsp,typenum,maxr):
             num = num+1
     testacr = num/len(strtablet)
 
-    print(maxr,testacr)
+    print(maxr, rpslist[maxr], testacr)
 
     return testacr
 
